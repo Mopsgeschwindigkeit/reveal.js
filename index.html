@@ -8,7 +8,7 @@
 
 		<link rel="stylesheet" href="dist/reset.css">
 		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/black.css">
+		<link rel="stylesheet" href="dist/theme/white.css">
 
 		<!-- Theme used for syntax highlighted code -->
 		<link rel="stylesheet" href="plugin/highlight/monokai.css">
@@ -16,9 +16,418 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+				<section> <!-- Title Page -->
+					Building an IoT Load Testing Simulator <br> for the smaXtec animal care GmbH</p>
+				</section>
+				<section><!-- Overview -->
+					<h3>Overview</h3> <br>
+						<p class="fragment fade-in">smaXtec</p>
+						<p class="fragment fade-in">Motivation</p>
+						<p class="fragment fade-in">Related Work</p>
+						<p class="fragment fade-in">The Simulator</p>
+						<p class="fragment fade-in">Scope & Measures of Success</p>
+						<p class="fragment fade-in">Experiments</p>
+						<p class="fragment fade-in">Conclusion</p>
+					<aside class="notes">
+						<ul>
+							<li>Short Introduction about smaxtec!</li>
+							<li>Why would smaxtec need a simulator!</li>
+							<li>Have a look at the concepts and ideas in the literature</li>
+							<li>Explain the simulator and link them to releated work</li>
+							<li>Explain the scope of the simulator and the specified requirements</li>
+							<li>Present the 3 experiments </li>
+							<li>Interpret the Experiment and give some open point for the future!</li>
+						</ul>
+					</aside>
+				</section>
+				<section> <!-- smaxtec -->
+					<section>
+						<h3>smaXtec</h3>	
+					</section>
+					<section>
+						<h3>smaXtec</h3><br>
+						<ul>
+							<li>Real-Time health monitoting for cows</li><br>
+							<li>Bolus measures data inside the cow
+								<ul>
+									<li>Temperature</li>
+									<li>Activity</li>
+									<li>ph-Value (stomach acid)</li><br>
+								</ul>
+							</li>
+							<li>Calculation of health-specifc metrics
+								<ul>
+									<li>Diseases</li>
+									<li>Calving alerts</li>
+									<li>Waterintake</li>
+								</ul>
+							</li><br>
+							<li>Notifies the customer</li>
+						</ul>
+						<aside class="notes">
+							Here I want give a short introduction about smaxtec!
+							Just very general, what data is collected and what we do with it!
+						</aside>
+					</section>
+					<section>
+						<img src="smaxtec-system-function.svg">
+						<aside class="notes">
+							Explain the "Data-Flow" with this picture 
+						</aside>
+					</section>
+				</section>
+				<section> <!-- Motivation -->
+					<section>
+						<h3>Motivation</h3>
+					</section>
+					<section>
+						<h3>Motivation</h3><br>
+						<ul>
+							<li class="fragment fade-in" data-fragment-index="1">Increase customer satisfaction
+								<ul>
+									<li class="fragment fade-in" data-fragment-index="2">Reduce downtimes</li>
+									<li class="fragment fade-in" data-fragment-index="2">Resolve incidents faster</li>
+								</ul>
+							</li>
+						</br>
+							<li class="fragment fade-in" data-fragment-index="3">Enabling growth
+								<ul>
+									<li class="fragment fade-in" data-fragment-index="4">Simulating expected future load</li>
+								</ul>
+							</li>
+						</ul>
+						<aside class="notes">
+							Here i want to explain the motivation behind the simulator!
+							what smaxtec wants to achieve with it!
+						</aside>
+					</section>
+				</section>
+				<section> <!-- Related Work -->
+					<section>
+						<h3>Related Work</h3>
+						
+					</section>
+					<section>
+						<img height="600" alt="Test" src="loadtesting.png">
+						<p style="font-size: x-small;">Source: Z. M. J. Jiang, “Load testing large-scale software systems"</p>
+						<aside class="notes">
+							Describing the concepts and ideas described in the literature.
+							I will only show this graph, because it provides a really good overview.
+						</aside>
+					</section>
+				</section>
+				<section> <!-- Simulator -->
+					<section>
+						<h3>Simulator</h3>
+					</section>
+					<section>
+						<img src="simulator-bb.drawio.png">
+						<aside class="notes">
+							Here I want to describe how the simulator is built and what the different components do!
+							Again i will only show this picture!
+							After wards i will connect the "Literature" wiht the "Simualtor".
+						</aside>
+					</section>						
+				</section>
+				<section> <!-- Scope & Measures of Success -->
+					<section>
+						<h3>Scope & Measures of Success</h3>
+					</section>
+					<section>
+						<h3>Goals</h3></br>
+						<ul>
+							<li>Replication of live ingress</li></br>
+							<li>Simulations foucs on ingress only</li></br>
+							<li class="fragment fade-in">Why?
+								<ul>
+									<li>Ingress is system-critical</li>
+									<li>Processable work volume defined by ingress</li>
+									<li>Scaling requires some effort</li>
+								</ul>
+							</li>
+							<aside class="notes">
+								Here I want to explain what the scope of the simulator and 
+								why we defined it that way. I also want to note what is out
+								of scope!
+								
+							</aside>
+						</ul>
+					</section>
+					<section>
+						<h3>Measures of Success</h3></br>
+						<ol>
+							<li>Similarity to live-system under same load</li> </br>
+							<li>Realistic metrics behavior under lower load</li> </br>
+							<li>Reproduction of past system failures</li></br>
+							Important Metrics:				
+							<ul>
+								<li>kilo-bytes/sec on ingress_chirpstack</li>
+								<li>Request/Response times between App- and Networkserver (gPRC)</li>
+								<li>Components CPU utilization</li>
+							</ul>
+						</ol>
+						<aside class="notes">
+							Here I want explain the given "requirements" selected from us (Alex, Philipp and I)
+							And would also explain what metrics are most important to define the behavior of the simulator.
+						</aside>
+					</section>
+				</section>
+				<section> <!-- Experiments -->
+					<section>
+						<h3>Experiments</h3>
+					</section>
+					<section>
+						<h3>Simulating Approach</h3><br>
+						<ul>
+							<li>Live System (340.000 -  360.000 uplinks per hour)
+								<ul>
+									<li>roughly 170.000 - 180.000 devices</li>
+									<li>Bolus sends 2 uplinks per hour</li>
+								</ul>
+							</li>
+							</br>
+							<li> Simulator (240.000 - 384.000 uplinks per hour)
+								<ul>
+									<li>10 - 16 Sensor-Simulator-Instances</li>
+									<li>100 devices per instance</li>
+									<li>15 sec uplink interval</li>
+									<li>Simulation Time: 10 min</li>
+									<li>Comparison with the live system</li>
+								</ul>
+							</li>
+						</ul>
+						<aside class="notes">
+							Here i want to talk about the approach I choose the run the simulation (e.g. Number of devices, uplink-intervals, etc...)
+							and why i did so. I would also talk about other possible approaches and explain pros and cons!
+						</aside>
+					</section>
+					<section>
+						<h3>Simulating Approach</h3><br>
+						<ul>
+							<li>Same resource allocation as live:
+								<ul>
+									<li>Chirpstack</li>
+									<li>MQTT</li>
+									<li>DefaultPartitioner</li>
+									<li>Redis</li>
+								</ul>
+							</li><br>
+							<li>Different resource allocation as live: 
+								<ul>
+									<li>Postgres</li>
+									<li>Kafka</li>
+									<li>PacketParser</li>
+								</ul>
+							</li>
+						</ul>
+						<aside class="notes">
+							Here i want to describe about the resource allocation of the different simulator components!
+							Also want to explain why some components are not similar compared to the live system!
+						</aside>
+					</section>
+					<section>
+						<h3>Experiment 1</h3><br>
+						<ul>
+							<li>Tested Measure: Similarity to live-system under same load</li><br>
+							<li>336.000 uplinks/hour -> 80 kbytes/sec on topic_ingress_chirpstack</li><br>
+							<li>Simulation Time: 10 min</li><br>
+							<li>Important Metrics:
+								<ul>
+									<li>kbytes/sec on topic_ingress_chirpstack</li>
+									<li>CPU uitilization App- & Networkserver</li>
+									<li>gRPC call times between App- & Networkserver</li>
+								</ul>
+							</li>
+						</ul>
+						<aside class="notes">
+							Explaining setting for Experiment 1
+						</aside>
+					</section>
+					<section>
+						<div class="r-stack">
+							<img class="fragment fade-out" data-fragment-index="0" src="exp1/org/ingress_chirpstack.png">
+							<img class="fragment current-visible" data-fragment-index="0" src="exp1/org/cpu_as.png">
+							<img class="fragment current-visible" src="exp1/org/cpu_ns.png">
+							<img class="fragment current-visible" src="exp1/org/grpc_tx.png">
+							<img class="fragment" src="exp1/org/grpc_uplink.png">
+						</div>
+						<aside class="notes">
+							<p>I would like to show the graphs for:</p>
+							<ul>
+								<li>bytes/sec on topic ingress_chirpstack</li>
+								<li>CPU Appserver</li>
+								<li>CPU Networkserver</li>
+								<li>gRPC uplink times</li>
+								<li>gRPC ack times</li>
+							</ul>
+						</aside>
+					</section>
+					<section>
+						<h3>Experiment 1 - Observations</h3><br>
+						<ul>
+							<li>Load was stable at 80 kbytes/sec</li><br>
+							<li>Appserver CPU: 5 to 10 milicores higher</li><br>
+							<li>Networkserver CPU: 5 to 10 milicores lower</li><br>
+							<li>gRPC calles took 1 ms longer</li><br>
+							<li>CPU from other component: No seen differences</li>
+						</ul>
+						<aside class="notes">
+							Here i want to describe the observed behavior. I also want to explain why there are difference!
+						</aside>
+					</section>
+					<section>
+						<h3>Experiment 2</h3><br>
+						<ul>
+							<li>Tested Measure: Realistic Metrics behavior under lower load</li><br>
+							<li>240.000 upinlks/hour -> 57 kbytes/sec on ingress_chirpstack</li><br>
+							<li>Simulation Time: 10 min</li><br>
+							<li>Important Metrics:
+								<ul>
+									<li>kbytes/sec on topic_ingress_chirpstack</li>
+									<li>CPU uitilization App- & Networkserver</li>
+									<li>gRPC call times between App- & Networkserver</li>
+								</ul>
+							</li>
+							<aside class="notes">
+								Explaining setting for Experiment 2
+							</aside>
+					</section>
+					<section>
+						<div class="r-stack">
+							<img class="fragment fade-out" data-fragment-index="0" src="exp2/original/ingress_chirpstack.png">
+							<img class="fragment current-visible" data-fragment-index="0" src="exp2/original/cpu_as.png">
+							<img class="fragment current-visible" src="exp2/original/cpu_ns.png">
+							<img class="fragment current-visible" src="exp2/original/grpc_tx.png">
+							<img class="fragment" src="exp2/original/grpc_uplink.png">
+						</div>	
+						<aside class="notes">
+							<p>I would like to show the graphs for:</p>
+							<ul>
+								<li>bytes/sec on topic ingress_chirpstack</li>
+								<li>CPU Appserver</li>
+								<li>CPU Networkserver</li>
+								<li>gRPC uplink times</li>
+								<li>gRPC ack times</li>
+							</ul>
+						</aside>					
+					</section>
+					<section>
+						<h3>Experiment 2 - Observations</h3><br>
+						<ul>
+							<li>Load was stable at 57 kbytes/sec</li><br>
+							<li>All Components show a lower CPU uitilization</li><br>
+							<li>gRPC calls took 1 ms less</li><br>
+						</ul>						
+						<aside class="notes">
+							Here i want to describe the observed behavior. I also want to explain why there are difference
+						</aside>
+					</section>
+					<section>
+						<h3>Experiment 3</h3><br>
+						<ul>
+							<li>Tested Measure: Similarity to live-system under same load</li><br>
+							<li>384.000 uplinks/hour -> 90 kbytes/sec on ingress_chirpstack</li><br>
+							<li>Simulation Time: 10 min</li><br>
+							<li>max_idle_connection=2</li><br>
+							<li>Important Metrics:
+								<ul>
+									<li>grpc-call times between App- & Networkserver</li>
+									<li>Number of Dropped Packets by PacketParser</li>
+								</ul>
+							</li>
+						</ul>
+						<aside class="notes">
+							Explaining setting for Experiment 3
+						</aside>
+					</section>
+					<section>
+						<div class="r-stack">
+							<img class="fragment fade-out" data-fragment-index="0" src="exp3/original/ingress_chirpstack.png">
+							<img class="fragment current-visible" data-fragment-index="0" src="exp3/original/grpc_uplink.png">
+							<img class="fragment current-visible" src="exp3/original/grpc_tx.png">
+							<img class="fragment" src="exp3/original/late_acks.png">
+						</div>
+						<aside class="notes">
+							<p>I would like to show the graphs for:</p>
+							<ul>
+								<li>bytes/sec on topic ingress_chirpstack</li>
+								<li>gRPC uplink times</li>
+								<li>gRPC ack times</li>
+								<li>Number of dropped packets</li>
+							</ul>
+						</aside>
+					</section>
+					<section>
+						<h3>Experiment 3 - Observations</h3><br>
+						<ul>
+							<li>Load fluctuated between  83 - 75 kbytes/sec</li><br>
+							<li>gRPC calls: on average 50% longer</li><br>
+							<li>gRPC calls very unstable</li><br>
+							<li>Significant amount of dropped packets</li><br>
+						</ul>						
+						<aside class="notes">
+							Here i want to describe the observed behavior. I also want to explain why there are difference!
+						</aside>
+						</section>
+				</section>
+				<section> <!-- Conclussion -->
+					<section>
+						<h3>Conclussion</h3> 
+					</section>
+					<section>
+						<h3>Interpretation of Experiment 1</h3><br>
+						<ul>
+							<li>Deviation can be explained by simulating approach</li><br>
+							<li>Deviation was in our window of acceptance</li><br>
+							<li>Requirement fulfilled</li><br>
+						</ul>
+						<aside class="notes">
+							Here i would to interpret the behavior of the simulator.
+							Is the tested requirement fulfilled
+						</aside>
+					</section>
+					<section>
+						<h3>Interpretation of Experiment 2</h3><br>
+						<ul>
+							<li>Every component showed a lower CPU utilization</li><br>
+							<li>gRPC calls at lower bound</li><br>
+							<li>Requirement fulfilled</li><br>
+						</ul>
+						<aside class="notes">
+							Here i would to interpret the behavior of the simulator.
+							Is the tested requirement fulfilled
+						</aside>
+					</section>
+					<section>
+						<h3>Interpretation of Experiment 3</h3><br>
+						<ul>
+							<li>max_idle_connections=2 introduced a bottleneck</li><br>
+							<li>Similar behavior as live system: higher gRPC calls and packet drop</li><br>
+							<li>Requiremnt fulfilled</li><br>
+						</ul>
+						<aside class="notes">
+							Here i would to interpret the behavior of the simulator.
+							Is the tested requirement fulfilled
+						</aside>
+					</section>
+					<section>
+						<h3>Open Points</h3><br>
+						<ul>
+							<li>Combine Chirpstack Simulator and Sensor Simulator</li><br>
+							<li>Generation of meaningful data-packets</li><br>
+							<li>Comprehensive documentation</li><br>
+						</ul>
+						<aside class="notes">
+							Here would like to describe some open which would lead to an improvement!
+						</aside>
+					</section>
+				</section>
+				<section> <!-- End Page -->
+					Building an IoT Load Testing Simulator <br> for the smaXtec animal care GmbH</p>
+				</section>
 			</div>
+			<img class="left-bottom" src="TU_Graz.png">
+			<img class="right-bottom" width="150" src="icon_smaxtec.svg">
 		</div>
 
 		<script src="dist/reveal.js"></script>
@@ -31,10 +440,15 @@
 			// - https://revealjs.com/config/
 			Reveal.initialize({
 				hash: true,
+				controls: false,
 
 				// Learn about plugins: https://revealjs.com/plugins/
 				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
 			});
+			Reveal.configure({ showNotes: "separate-page" });
+			Reveal.configure({ pdfSeparateFragments: false });
+			Reveal.configure({ pdfMaxPagesPerSlide: 1});
 		</script>
+		
 	</body>
 </html>
